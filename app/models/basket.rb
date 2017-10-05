@@ -16,6 +16,18 @@ class Basket < ApplicationRecord
     finish = args.fetch(:finish, '2017-10-01')
     start_date = DateTime.parse(beginning)
     end_date = DateTime.parse(finish)
-    group_by_period("month", :transaction_date, range: start_date..end_date).sum('baskets.total_cents').to_a
+    unit = Basket.pick_unit(start_date, end_date)
+    data = group_by_period(unit, :transaction_date, range: start_date..end_date).sum('baskets.total_cents').to_a
+    {data: data, unit: unit}
+  end
+
+  def self.pick_unit(start_date, end_date)
+    if end_date - start_date < (15 / 1)
+      "day"
+    elsif end_date - start_date < (30 / 1)
+      "week"
+    else
+      "month"
+    end
   end
 end
