@@ -5,7 +5,7 @@ class Basket < ApplicationRecord
 
   def self.within_date_range(args={})
     beginning = args.fetch(:beginning, '2015-11-23')
-    finish = args.fetch(:finish, '2017-10-01')
+    finish = args.fetch(:finish, '2017-09-27')
     start_date = DateTime.parse(beginning)
     end_date = DateTime.parse(finish)
     Basket.where(transaction_date: start_date..end_date)
