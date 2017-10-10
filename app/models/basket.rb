@@ -28,8 +28,8 @@ class Basket < ApplicationRecord
 
 
   def self.within_date_range(args={})
-    oldest_date = args.fetch(:oldest_date, '2015-11-23')
-    newest_date = args.fetch(:newest_date, '2017-09-27')
+    oldest_date = args.fetch(:oldest_date)
+    newest_date = args.fetch(:newest_date)
     start_date = DateTime.parse(oldest_date)
     end_date = DateTime.parse(newest_date)
     where(transaction_date: start_date..end_date)
