@@ -3,10 +3,9 @@ class Basket < ApplicationRecord
   has_many :line_items, dependent: :destroy
   has_many :products, through: :line_items
 
-
-  def self.custom_sort(category, direction)
-    category = category || "sort_date"
-    direction = direction || "desc"
+  def self.custom_sort(args)
+    category = args.fetch(:category, "sort_date")
+    direction = args.fetch(:direction, "desc")
     direction = 'asc'.casecmp(direction).zero? ? 'asc' : 'desc'
     send(category, direction)
   end
@@ -26,23 +25,22 @@ class Basket < ApplicationRecord
     order(order)
   end
 
-
-  def self.within_date_range(args={})
-    oldest_date = args.fetch(:oldest_date)
-    newest_date = args.fetch(:newest_date)
+  def self.within_date_range(args = {})
+    oldest_date = args.fetch(:oldest_date, order(:transaction_date).first.transaction_date.to_s)
+    newest_date = args.fetch(:newest_date, order(:transaction_date).last.transaction_date.to_s)
     start_date = DateTime.parse(oldest_date)
     end_date = DateTime.parse(newest_date)
     where(transaction_date: start_date..end_date)
   end
 
-  def self.group_baskets(args={})
+  def self.group_baskets(args = {})
     oldest_date = args.fetch(:oldest_date, '2015-11-23')
     newest_date = args.fetch(:newest_date, '2017-09-27')
     start_date = DateTime.parse(oldest_date)
     end_date = DateTime.parse(newest_date)
     unit = args.fetch(:unit, Basket.pick_unit(start_date, end_date))
     data = group_by_period(unit, :transaction_date, range: start_date..end_date).sum('baskets.total_cents').to_a
-    {data: data, unit: unit}
+    { data: data, unit: unit }
   end
 
   def self.pick_unit(start_date, end_date)
