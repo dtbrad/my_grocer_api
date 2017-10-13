@@ -3,7 +3,7 @@ Rails.application.routes.draw do
   namespace :api do
     namespace :v1 do
       get 'products', to: "products#index"
-      get 'baskets', to: "baskets#index"
+      resources :baskets
       get 'spending_history', to: 'baskets#spending_history'
     end
   end
