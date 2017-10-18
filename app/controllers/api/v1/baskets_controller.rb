@@ -1,4 +1,5 @@
 class Api::V1::BasketsController < ApplicationController
+  skip_before_action :authenticate_token!
   def index
     baskets = Basket.within_date_range(params).custom_sort(params)
     paginate json: baskets, each_serializer: BasketIndexSerializer

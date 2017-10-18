@@ -1,4 +1,4 @@
-User.create(id: 1, name: "Sample User")
+user = User.create(id: 1, name: "Sample User", email: "sample@gmail.com", password: "password")
 
 Basket.create!([
   {id: 2, transaction_date: "2017-10-11 18:01:27", user_id: 1, total_cents: 299, tax_cents: 0, subtotal_cents: 299},
@@ -3385,3 +3385,5 @@ Basket.all.each do |b|
   b.line_item_count = b.line_items.length
   b.save
 end
+
+ActiveRecord::Base.connection.tables.each { |t| ActiveRecord::Base.connection.reset_pk_sequence!(t) }

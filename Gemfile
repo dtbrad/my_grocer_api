@@ -18,6 +18,9 @@ gem 'money-rails'
 gem 'kaminari', '~> 1.0', '>= 1.0.1'
 gem 'api-pagination'
 gem 'seed_dump', '~> 3.2', '>= 3.2.4'
+gem 'jwt', '~> 1.5.6'
+gem 'bcrypt'
+gem 'dotenv-rails', '~> 2.1', '>= 2.1.1'
 # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
 # gem 'jbuilder', '~> 2.5'
 # Use Redis adapter to run Action Cable in production
