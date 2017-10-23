@@ -30,7 +30,7 @@ module MyGrocerApi
     config.middleware.insert_before 0, Rack::Cors do
      allow do
        origins '*'
-       resource '*', :expose => ['Per-Page', 'Total', 'jwt', 'item_count'], :headers => :any, :methods => [:get, :post, :options]
+       resource '*', :expose => ['Per-Page', 'Total', 'jwt', 'user_id', 'user_name', 'user_email', 'item_count'], :headers => :any, :methods => [:get, :post, :options]
      end
    end
 
