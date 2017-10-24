@@ -1,5 +1,7 @@
 Rails.application.routes.draw do
 
+root to: 'application#info'
+
   namespace :api do
     namespace :v1 do
       post '/signup', to: "users#signup"

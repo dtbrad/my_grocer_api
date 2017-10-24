@@ -1,4 +1,4 @@
-class Api::V1::BasketsController < ApplicationController
+class Api::V1::BasketsController < ApiController
   skip_before_action :authenticate_token!
 
   def index

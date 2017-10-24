@@ -1,4 +1,4 @@
-class Api::V1::ProductsController < ApplicationController
+class Api::V1::ProductsController < ApiController
   skip_before_action :authenticate_token!
   def index
     products = Product.all
