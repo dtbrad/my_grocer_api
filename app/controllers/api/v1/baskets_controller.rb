@@ -14,8 +14,13 @@ class Api::V1::BasketsController < ApiController
   end
 
   def show
-    basket = Basket.find(params[:id])
-    render json: basket, serializer: BasketShowSerializer
+    user = set_user
+    basket = Basket.find_by(id: params[:id])
+    if basket && basket.user == user
+      render json: basket, serializer: BasketShowSerializer
+    else
+      render status: 400, json: { message: ["You may only view your own shopping trips"] }
+    end
   end
 
   private
