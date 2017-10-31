@@ -1,5 +1,5 @@
 class Api::V1::UsersController < ApiController
-  skip_before_action :authenticate_token!
+  skip_before_action :authenticate_token
 
   def signup
     user = User.new(user_params)

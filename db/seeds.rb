@@ -1,6 +1,6 @@
-User.create(id: 1, name: "Sample User", password_digest: "$2a$10$juAnjjGqSSNfCiPW78w0.u48rZOlGnOmOJQsQK7kLP.f6WbwZrlLm", email: "sample@mail.com")
-User.create(id: 2, name: "Registered User 1", password_digest: "$2a$10$ZtlSXLbOEUog/2pgZKq2iOFahUpZfzgbtchAQ04Qscr/ZUCHfDZEi", email: "user_one@mail.com")
-User.create(id: 3, name: "Registered User 2", password_digest: "$2a$10$NeVaKwsXyJCNfbQjYaC9tuJA02pfTmCF.IOyIKAvQkL/dYpbWdUvu", email: "user_two@mail.com")
+User.create(id: 1, name: "User 1", password_digest: "$2a$10$juAnjjGqSSNfCiPW78w0.u48rZOlGnOmOJQsQK7kLP.f6WbwZrlLm", email: "user1@mail.com")
+User.create(id: 2, name: "User 2", password_digest: "$2a$10$ZtlSXLbOEUog/2pgZKq2iOFahUpZfzgbtchAQ04Qscr/ZUCHfDZEi", email: "user2@mail.com")
+User.create(id: 3, name: "User 3", password_digest: "$2a$10$NeVaKwsXyJCNfbQjYaC9tuJA02pfTmCF.IOyIKAvQkL/dYpbWdUvu", email: "user3@mail.com")
 
 Product.create!([
   {id: 1, name: "Wonder Classic", display_name: "Wonder Classic", real_unit_price_cents: nil},
