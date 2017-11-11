@@ -8,7 +8,7 @@ root to: 'application#info'
       post '/login', to: "sessions#login"
       get 'products', to: "products#index"
       resources :baskets
-      get 'spending_history', to: 'baskets#spending_history'
+      get 'baskets_spending_chart', to: 'baskets#spending_chart'
     end
   end
 end

@@ -6,7 +6,7 @@ class Api::V1::BasketsController < ApiController
     paginate json: baskets, each_serializer: BasketIndexSerializer
   end
 
-  def spending_history
+  def spending_chart
     spending = Basket.group_baskets(@current_user, params)
     render json: spending
   end
