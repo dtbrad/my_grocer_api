@@ -4,7 +4,7 @@ A "working draft" of this API is hosted at <https://mygrocerapi.herokuapp.com>.
 
 A React web application for this API is hosted at <https://grocer-react-client.herokuapp.com>, and its repository can be found at <https://github.com/dtbrad/grocer-react-client>
 
-GROCER API is a start at translating my full stack Rails application, [www.my-grocer.com](https://www.my-grocer.com) (repo: <https://github.com/dtbrad/grocer>) into a Rails API and separate React web application. It currently has basic JWT authentication and index/show views for a user's shopping trips.
+GROCER API is a start at translating my full stack Rails application, [www.my-grocer.com](https://www.my-grocer.com) (repo: <https://github.com/dtbrad/grocer>) into a Rails API and separate React web application. Instead of Devise, it uses JWT authentication. For full functionality, including the ability to import your own shopping history, and create and email yourself shopping lists, please visit [grocer](https://www.my-grocer.com).
 
 A "working draft" of this API is hosted at <https://mygrocerapi.herokuapp.com>.
 

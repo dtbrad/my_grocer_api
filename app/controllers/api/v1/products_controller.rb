@@ -1,8 +1,19 @@
 class Api::V1::ProductsController < ApiController
-  skip_before_action :authenticate_token
+  before_action :authenticate_token
   def index
-    products = Product.all
-    response.headers["item_count"] = products.count
-    paginate json: products
+    products = @current_user.products.filtered_products.custom_sort(params)
+    paginate json: products, option_name: @current_user
+  end
+
+  def show
+    product = Product.find(params[:productId])
+    line_items = product.line_items.where("line_items.user_id = ?", @current_user.id).custom_sort(params)
+    paginate json: line_items
+  end
+
+  def spending_chart
+    product = Product.find(params[:productId])
+    spending = product.line_items.where(user_id: @current_user.id).group_line_items(@current_user, params)
+    render json: spending
   end
 end
