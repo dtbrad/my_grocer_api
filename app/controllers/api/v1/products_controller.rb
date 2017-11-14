@@ -1,8 +1,14 @@
 class Api::V1::ProductsController < ApiController
   before_action :authenticate_token
+
   def index
     products = @current_user.products.filtered_products.custom_sort(params)
     paginate json: products, option_name: @current_user
+  end
+
+  def total_spent
+    products = @current_user.products.most_money_spent
+    render json: products
   end
 
   def show

@@ -46,6 +46,21 @@ class Product < ApplicationRecord
     group('products.id').order(order)
   end
 
+  def self.most_money_spent
+    filtered_products
+      .group('products.id')
+      .order('sum(line_items.total_cents) desc').limit(10)
+      .pluck('products.name, sum(line_items.total_cents), products.id')
+  end
+
+  def self.most_purchased
+    filtered_products
+      .joins(:line_items)
+      .group('products.id')
+      .order('sum(line_items.quantity) desc').limit(10)
+      .pluck('products.name, sum(line_items.quantity), products.id')
+  end
+
   def highest_price_by_user(user)
     selection = line_items.where(user_id: user.id)
     return if selection.empty?
