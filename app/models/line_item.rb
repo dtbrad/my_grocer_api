@@ -24,9 +24,9 @@ class LineItem < ApplicationRecord
   end
 
   def self.custom_sort(args)
-    category = args.fetch(:category, "sort_date")
-    direction = args.fetch(:direction, "desc")
-    direction = 'asc'.casecmp(direction).zero? ? 'asc' : 'desc'
+    category = args.fetch(:sortCategory, "sort_date")
+    desc = args.fetch(:desc, "true")
+    direction = desc == "true" ? 'desc' : 'asc'
     if category == "sort_date"
       send("sort_date", direction)
     else

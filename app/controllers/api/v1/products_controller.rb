@@ -14,6 +14,8 @@ class Api::V1::ProductsController < ApiController
   def show
     product = Product.find(params[:productId])
     line_items = product.line_items.where("line_items.user_id = ?", @current_user.id).custom_sort(params)
+    response.headers["newest_date"] = line_items.reorder(transaction_date: :desc).first.transaction_date.to_s
+    response.headers["oldest_date"] = line_items.reorder(transaction_date: :desc).last.transaction_date.to_s
     paginate json: line_items
   end
 

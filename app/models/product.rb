@@ -15,9 +15,9 @@ class Product < ApplicationRecord
   end
 
   def self.custom_sort(args)
-    category = args.fetch(:category, "sort_name")
-    direction = args.fetch(:direction, "desc")
-    direction = 'asc'.casecmp(direction).zero? ? 'asc' : 'desc'
+    category = args.fetch(:sortCategory, "sort_name")
+    desc = args.fetch(:desc, "true")
+    direction = desc == "true" ? 'desc' : 'asc'
     send(category, direction)
   end
 
