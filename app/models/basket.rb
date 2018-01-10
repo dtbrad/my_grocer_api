@@ -2,6 +2,7 @@ class Basket < ApplicationRecord
   belongs_to :user, optional: true
   has_many :line_items, dependent: :destroy
   has_many :products, through: :line_items
+  paginates_per 10
 
   def self.custom_sort(args)
     category = args.fetch(:sortCategory, "sort_date")
@@ -26,16 +27,16 @@ class Basket < ApplicationRecord
   end
 
   def self.within_date_range(args = {})
-    oldest_date = args.fetch(:oldest_date, order(:transaction_date).first.transaction_date.to_s)
-    newest_date = args.fetch(:newest_date, order(:transaction_date).last.transaction_date.to_s)
+    oldest_date = args.fetch(:oldestDate, order(:transaction_date).first.transaction_date.to_s)
+    newest_date = args.fetch(:newestDate, order(:transaction_date).last.transaction_date.to_s)
     start_date = DateTime.parse(oldest_date)
     end_date = DateTime.parse(newest_date)
     where(transaction_date: start_date..end_date)
   end
 
   def self.group_baskets(args = {})
-    oldest_date = args.fetch(:oldest_date, self.last.transaction_date.to_s)
-    newest_date = args.fetch(:newest_date, self.first.transaction_date.to_s)
+    oldest_date = args.fetch(:oldestDate, self.last.transaction_date.to_s)
+    newest_date = args.fetch(:newestDate, self.first.transaction_date.to_s)
     start_date = DateTime.parse(oldest_date)
     end_date = DateTime.parse(newest_date)
     unit = args.fetch(:unit, Basket.pick_unit(start_date, end_date))

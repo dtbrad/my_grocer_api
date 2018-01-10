@@ -3,6 +3,7 @@ class Product < ApplicationRecord
   has_many :users, through: :line_items
   has_many :baskets
   has_many :display_names
+  paginates_per 10
 
   def self.filtered_products
     Product.where.not(name: ['Beer Bottle Dep', 'Beer Deposit 30 C',

@@ -2,10 +2,11 @@ class LineItem < ApplicationRecord
   belongs_to :basket
   belongs_to :product
   has_one :user
+  paginates_per 10
 
   def self.group_line_items(user, args = {})
-    oldest_date = args.fetch(:oldest_date, user.baskets.order(:transaction_date).first.transaction_date.to_s)
-    newest_date = args.fetch(:newest_date, user.baskets.order(:transaction_date).last.transaction_date.to_s)
+    oldest_date = args.fetch(:oldestDate, user.baskets.order(:transaction_date).first.transaction_date.to_s)
+    newest_date = args.fetch(:newestDate, user.baskets.order(:transaction_date).last.transaction_date.to_s)
     start_date = DateTime.parse(oldest_date)
     end_date = DateTime.parse(newest_date)
     unit = args.fetch(:unit, LineItem.pick_unit(start_date, end_date))
@@ -32,6 +33,14 @@ class LineItem < ApplicationRecord
     else
       attribute_sort(category, direction)
     end
+  end
+
+  def self.within_date_range(args = {})
+    oldest_date = args.fetch(:oldestDate, order(:transaction_date).first.transaction_date.to_s)
+    newest_date = args.fetch(:newestDate, order(:transaction_date).last.transaction_date.to_s)
+    start_date = DateTime.parse(oldest_date)
+    end_date = DateTime.parse(newest_date)
+    where(transaction_date: start_date..end_date)
   end
 
   def self.sort_date(direction)
