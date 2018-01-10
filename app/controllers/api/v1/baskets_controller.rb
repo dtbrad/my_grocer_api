@@ -3,8 +3,11 @@ class Api::V1::BasketsController < ApiController
 
   def index
     baskets = @current_user.baskets.within_date_range(params).custom_sort(params)
-    response.headers["newestDate"] = baskets.reorder(transaction_date: :desc).first.transaction_date.to_s
-    response.headers["oldestDate"] = baskets.reorder(transaction_date: :desc).last.transaction_date.to_s
+    # client only needs below if it didn't provide them in arguments
+    unless (params["newestDate"] || params["oldestDate"])
+      response.headers["newestDate"] = baskets.reorder(transaction_date: :desc).first.transaction_date.to_s
+      response.headers["oldestDate"] = baskets.reorder(transaction_date: :desc).last.transaction_date.to_s
+    end
     paginate json: baskets, each_serializer: BasketIndexSerializer
   end
 

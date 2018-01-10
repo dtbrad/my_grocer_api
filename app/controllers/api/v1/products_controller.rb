@@ -13,9 +13,12 @@ class Api::V1::ProductsController < ApiController
 
   def show
     product = Product.find(params[:productId])
-    line_items = product.line_items.where("line_items.user_id = ?", @current_user.id).custom_sort(params)
-    response.headers["newest_date"] = line_items.reorder(transaction_date: :desc).first.transaction_date.to_s
-    response.headers["oldest_date"] = line_items.reorder(transaction_date: :desc).last.transaction_date.to_s
+    line_items = product.line_items.where("line_items.user_id = ?", @current_user.id).within_date_range(params).custom_sort(params)
+    # client only needs below if it didn't provide them in arguments
+    unless (params["newestDate"] || params["oldestDate"])
+      response.headers["newestDate"] = line_items.reorder(transaction_date: :desc).first.transaction_date.to_s
+      response.headers["oldestDate"] = line_items.reorder(transaction_date: :desc).last.transaction_date.to_s
+    end
     paginate json: line_items
   end
 
